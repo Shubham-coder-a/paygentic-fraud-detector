@@ -12,7 +12,12 @@ function checkFraud() {
 
     let riskLevel = document.getElementById("riskLevel");
 
+    let score = document.getElementById("score");
 
+    let progressBar = document.getElementById("progress-bar");
+
+
+    // HIGH RISK
     if (
         amount > 50000 ||
         location.toLowerCase() === "unknown" ||
@@ -24,8 +29,16 @@ function checkFraud() {
 
         riskLevel.innerHTML = "🔴 High Risk";
         riskLevel.style.color = "red";
+
+        score.innerHTML = "Fraud Score: 90%";
+        score.style.color = "red";
+
+        progressBar.style.width = "90%";
+        progressBar.style.backgroundColor = "red";
     }
 
+
+    // MEDIUM RISK
     else if (amount > 10000) {
 
         result.innerHTML = "⚠️ Monitor Transaction";
@@ -33,8 +46,16 @@ function checkFraud() {
 
         riskLevel.innerHTML = "🟡 Medium Risk";
         riskLevel.style.color = "orange";
+
+        score.innerHTML = "Fraud Score: 55%";
+        score.style.color = "orange";
+
+        progressBar.style.width = "55%";
+        progressBar.style.backgroundColor = "orange";
     }
 
+
+    // LOW RISK
     else {
 
         result.innerHTML = "✅ Safe Transaction";
@@ -42,5 +63,11 @@ function checkFraud() {
 
         riskLevel.innerHTML = "🟢 Low Risk";
         riskLevel.style.color = "green";
+
+        score.innerHTML = "Fraud Score: 10%";
+        score.style.color = "green";
+
+        progressBar.style.width = "10%";
+        progressBar.style.backgroundColor = "green";
     }
 }
