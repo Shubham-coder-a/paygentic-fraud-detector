@@ -14,38 +14,75 @@
     <div class="container">
 
         <h1>Paygentic Fraud Detector</h1>
+
         <h3 id="riskLevel"></h3>
 
         <p>Check if a payment transaction is safe or suspicious.</p>
 
+        <!-- Amount -->
         <input type="number" id="amount" placeholder="Enter Amount">
 
+        <!-- Location -->
         <input type="text" id="location" placeholder="Enter Location">
+
+        <!-- Payment Method -->
         <select id="paymentMethod">
-        
+
             <option value="">Select Payment Method</option>
-        
+
             <option value="UPI">UPI</option>
-        
+
             <option value="Card">Card</option>
-        
+
             <option value="Wallet">Wallet</option>
-        
+
             <option value="Net Banking">Net Banking</option>
-        
+
         </select>
+
+        <!-- Time -->
         <input type="time" id="time">
+
+        <!-- Button -->
         <button onclick="checkFraud()">
             Check Transaction
         </button>
 
+        <!-- Result -->
         <h2 id="result"></h2>
+
+        <!-- Fraud Score -->
         <h3 id="score"></h3>
+
+        <!-- Transaction ID -->
+        <h3 id="transactionId"></h3>
+
+        <!-- Reason -->
+        <h3 id="reason"></h3>
+
+        <!-- Progress Bar -->
         <div class="progress-container">
-        
             <div id="progress-bar"></div>
-        
         </div>
+
+        <!-- Transaction History -->
+        <h2>Transaction History</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Location</th>
+                    <th>Risk</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyBody">
+
+            </tbody>
+
+        </table>
 
     </div>
 
