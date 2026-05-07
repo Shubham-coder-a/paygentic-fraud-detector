@@ -1,6 +1,6 @@
 function checkFraud() {
 
-    let amount = document.getElementById("amount").value;
+    let amount = Number(document.getElementById("amount").value);
 
     let location = document.getElementById("location").value;
 
@@ -26,9 +26,16 @@ function checkFraud() {
 
     transactionId.innerHTML = "Transaction ID: TXN" + randomId;
 
+    let blacklistedLocations = [
+        "pakistan",
+        "russia",
+        "darkweb",
+        "unknown"
+    ];
+
 
     // INVALID AMOUNT
-    if (amount <= 0) {
+    if (amount <= 0 || isNaN(amount)) {
 
         result.innerHTML = "❌ Invalid Amount";
         result.style.color = "red";
@@ -45,6 +52,7 @@ function checkFraud() {
         reason.style.color = "red";
 
         progressBar.style.width = "0%";
+        progressBar.style.backgroundColor = "gray";
 
         return;
     }
@@ -53,10 +61,8 @@ function checkFraud() {
     // HIGH RISK
     if (
         amount > 50000 ||
-        location.toLowerCase() === "unknown" ||
+        blacklistedLocations.includes(location.toLowerCase()) ||
         (time >= "00:00" && time <= "04:00")
-
-        
     ) {
 
         result.innerHTML = "⚠️ Suspicious Transaction";
@@ -65,7 +71,8 @@ function checkFraud() {
         riskLevel.innerHTML = "🔴 High Risk";
         riskLevel.style.color = "red";
 
-        reason.innerHTML = "Reason: High Amount / Late Night Transaction";
+        reason.innerHTML =
+            "Reason: High Amount / Blacklisted Location / Late Night Transaction";
         reason.style.color = "red";
 
         score.innerHTML = "Fraud Score: 90%";
@@ -73,16 +80,16 @@ function checkFraud() {
 
         progressBar.style.width = "90%";
         progressBar.style.backgroundColor = "red";
-        
+
         historyBody.innerHTML += `
-<tr>
-    <td>${amount}</td>
-    <td>${location}</td>
-    <td style="color:red;">High Risk</td>
-</tr>
-`;
+        <tr>
+            <td>${amount}</td>
+            <td>${location}</td>
+            <td style="color:red;">High Risk</td>
+        </tr>
+        `;
     }
-    
+
 
     // MEDIUM RISK
     else if (amount > 10000) {
@@ -101,14 +108,16 @@ function checkFraud() {
 
         progressBar.style.width = "55%";
         progressBar.style.backgroundColor = "orange";
+
         historyBody.innerHTML += `
-<tr>
-    <td>${amount}</td>
-    <td>${location}</td>
-    <td style="color:orange;">Medium Risk</td>
-</tr>
-`;
+        <tr>
+            <td>${amount}</td>
+            <td>${location}</td>
+            <td style="color:orange;">Medium Risk</td>
+        </tr>
+        `;
     }
+
 
     // LOW RISK
     else {
@@ -127,12 +136,20 @@ function checkFraud() {
 
         progressBar.style.width = "10%";
         progressBar.style.backgroundColor = "green";
+
         historyBody.innerHTML += `
-<tr>
-    <td>${amount}</td>
-    <td>${location}</td>
-    <td style="color:green;">Low Risk</td>
-</tr>
-`;
+        <tr>
+            <td>${amount}</td>
+            <td>${location}</td>
+            <td style="color:green;">Low Risk</td>
+        </tr>
+        `;
     }
+
+
+    // CLEAR INPUTS
+    document.getElementById("amount").value = "";
+    document.getElementById("location").value = "";
+    document.getElementById("paymentMethod").value = "";
+    document.getElementById("time").value = "";
 }
