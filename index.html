@@ -13,6 +13,10 @@
 
     <div class="container">
 
+        <button onclick="toggleMode()" id="modeBtn">
+            🌙 Dark Mode
+        </button>
+
         <h1>Paygentic Fraud Detector</h1>
 
         <h3 id="riskLevel"></h3>
@@ -46,6 +50,12 @@
         <!-- Button -->
         <button onclick="checkFraud()">
             Check Transaction
+        </button>
+
+        <h3 id="scannerText"></h3>
+
+        <button onclick="downloadReport()" id="downloadBtn">
+            Download Report
         </button>
 
         <!-- Result -->
