@@ -230,3 +230,29 @@ th {
 
     background-color: #333;
 }
+
+#clearBtn {
+
+    width: 100%;
+
+    padding: 10px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: crimson;
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+#clearBtn:hover {
+
+    background-color: darkred;
+}
