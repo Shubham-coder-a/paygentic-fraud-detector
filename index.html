@@ -7,6 +7,7 @@
     <title>Paygentic Fraud Detector</title>
 
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -75,7 +76,27 @@
         <div class="progress-container">
             <div id="progress-bar"></div>
         </div>
-
+        <div class="stats">
+        
+            <div class="card">
+                <h3 id="totalTransactions">0</h3>
+                <p>Total Transactions</p>
+            </div>
+        
+            <div class="card">
+                <h3 id="highRiskCount">0</h3>
+                <p>High Risk</p>
+            </div>
+        
+            <div class="card">
+                <h3 id="safeCount">0</h3>
+                <p>Safe</p>
+            </div>
+        
+        </div>
+        <div class="chart-container">
+            <canvas id="fraudChart"></canvas>
+        </div>
         <!-- Transaction History -->
         <h2>Transaction History</h2>
         <button onclick="clearHistory()" id="clearBtn">
@@ -99,8 +120,15 @@
         </table>
 
     </div>
+ 
 
-    <script src="script.js"></script>
+    <div id="alertBox" class="alert-box">
+    
+        ⚠️ Fraud Alert Detected!
+    
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
 
 </body>
 

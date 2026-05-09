@@ -1,3 +1,13 @@
+let mediumRiskCount = 0;
+
+let totalTransactions = 0;
+
+let highRiskTransactions = 0;
+
+let safeTransactions = 0;
+
+
+// SPEAK MESSAGE
 function speakMessage(message) {
 
     let speech = new SpeechSynthesisUtterance(message);
@@ -13,6 +23,8 @@ function speakMessage(message) {
     window.speechSynthesis.speak(speech);
 }
 
+
+// LOAD SAVED HISTORY
 window.onload = function () {
 
     let savedHistory = localStorage.getItem("fraudHistory");
@@ -21,7 +33,12 @@ window.onload = function () {
 
         document.getElementById("historyBody").innerHTML = savedHistory;
     }
+
+    updateChart();
 };
+
+
+// MAIN FRAUD CHECK FUNCTION
 function checkFraud() {
 
     let scannerText = document.getElementById("scannerText");
@@ -56,12 +73,12 @@ function checkFraud() {
 
     score.innerHTML = "";
 
-    reason.innerHTML = "";
-
     transactionId.innerHTML = "";
 
+    reason.innerHTML = "";
 
-    // SCANNING EFFECT
+
+    // AI SCANNING EFFECT
     scannerText.innerHTML = "🔍 AI Scanning Transaction...";
 
     scannerText.style.color = "#00bfff";
@@ -82,12 +99,13 @@ function checkFraud() {
 
             "darkweb",
 
-            "unknown"
+            "unknown",
 
+            "remote"
         ];
 
 
-        // INVALID AMOUNT
+        // INVALID INPUT
         if (amount <= 0 || isNaN(amount)) {
 
             result.innerHTML = "❌ Invalid Amount";
@@ -108,7 +126,8 @@ function checkFraud() {
             transactionId.innerHTML = "Transaction ID: INVALID";
 
 
-            reason.innerHTML = "Reason: Amount cannot be 0 or negative";
+            reason.innerHTML =
+                "Reason: Amount cannot be 0 or negative";
 
             reason.style.color = "red";
 
@@ -140,23 +159,50 @@ function checkFraud() {
             riskLevel.style.color = "red";
 
 
+            score.innerHTML = "Fraud Score: 90%";
+
+            score.style.color = "red";
+
+
             reason.innerHTML =
                 "Reason: High Amount / Blacklisted Location / Late Night Transaction";
 
             reason.style.color = "red";
 
 
-            score.innerHTML = "Fraud Score: 90%";
-
-            score.style.color = "red";
-
             speakMessage("Warning! Suspicious Transaction Detected");
+
 
             progressBar.style.width = "90%";
 
             progressBar.style.backgroundColor = "red";
 
 
+            totalTransactions++;
+
+            highRiskTransactions++;
+
+
+            document.getElementById("totalTransactions").innerHTML =
+                totalTransactions;
+
+            document.getElementById("highRiskCount").innerHTML =
+                highRiskTransactions;
+
+
+            // ALERT BOX
+            let alertBox = document.getElementById("alertBox");
+
+            alertBox.style.display = "block";
+
+            setTimeout(() => {
+
+                alertBox.style.display = "none";
+
+            }, 3000);
+
+
+            // HISTORY
             historyBody.innerHTML += `
 
             <tr>
@@ -170,11 +216,6 @@ function checkFraud() {
             </tr>
 
             `;
-            localStorage.setItem(
-                "fraudHistory",
-                historyBody.innerHTML
-            );
-            
         }
 
 
@@ -191,20 +232,32 @@ function checkFraud() {
             riskLevel.style.color = "orange";
 
 
-            reason.innerHTML = "Reason: Medium Transaction Amount";
-
-            reason.style.color = "orange";
-
-
             score.innerHTML = "Fraud Score: 55%";
 
             score.style.color = "orange";
 
+
+            reason.innerHTML =
+                "Reason: Medium Transaction Amount";
+
+            reason.style.color = "orange";
+
+
             speakMessage("Monitor this transaction carefully");
+
 
             progressBar.style.width = "55%";
 
             progressBar.style.backgroundColor = "orange";
+
+
+            totalTransactions++;
+
+            mediumRiskCount++;
+
+
+            document.getElementById("totalTransactions").innerHTML =
+                totalTransactions;
 
 
             historyBody.innerHTML += `
@@ -220,10 +273,6 @@ function checkFraud() {
             </tr>
 
             `;
-            localStorage.setItem(
-                "fraudHistory",
-                historyBody.innerHTML
-            );
         }
 
 
@@ -240,20 +289,35 @@ function checkFraud() {
             riskLevel.style.color = "green";
 
 
-            reason.innerHTML = "Reason: Normal Safe Activity";
-
-            reason.style.color = "green";
-
-
             score.innerHTML = "Fraud Score: 10%";
 
             score.style.color = "green";
 
+
+            reason.innerHTML =
+                "Reason: Normal Safe Activity";
+
+            reason.style.color = "green";
+
+
             speakMessage("Safe transaction detected");
+
 
             progressBar.style.width = "10%";
 
             progressBar.style.backgroundColor = "green";
+
+
+            totalTransactions++;
+
+            safeTransactions++;
+
+
+            document.getElementById("totalTransactions").innerHTML =
+                totalTransactions;
+
+            document.getElementById("safeCount").innerHTML =
+                safeTransactions;
 
 
             historyBody.innerHTML += `
@@ -269,11 +333,20 @@ function checkFraud() {
             </tr>
 
             `;
-            localStorage.setItem(
-                "fraudHistory",
-                historyBody.innerHTML
-            ); 
         }
+
+
+        // SAVE HISTORY
+        localStorage.setItem(
+
+            "fraudHistory",
+
+            historyBody.innerHTML
+        );
+
+
+        // UPDATE PIE CHART
+        updateChart();
 
 
         // SCAN COMPLETE
@@ -295,7 +368,7 @@ function checkFraud() {
 }
 
 
-
+// DOWNLOAD REPORT
 function downloadReport() {
 
     let reportData = `
@@ -320,29 +393,29 @@ Generated by Paygentic Fraud Detector
 
 `;
 
+    let blob = new Blob([reportData], {
 
-    let blob = new Blob([reportData], { type: "text/plain" });
-
+        type: "text/plain"
+    });
 
     let link = document.createElement("a");
 
-
     link.href = URL.createObjectURL(blob);
 
-
     link.download = "fraud-report.txt";
-
 
     link.click();
 }
 
 
-
+// DARK MODE
 function toggleMode() {
 
     document.body.classList.toggle("dark-mode");
 }
 
+
+// LIVE DATE & TIME
 function updateDateTime() {
 
     let now = new Date();
@@ -352,6 +425,7 @@ function updateDateTime() {
     let time = now.toLocaleTimeString();
 
     document.getElementById("liveDateTime").innerHTML =
+
         "📅 " + date + " | ⏰ " + time;
 }
 
@@ -359,9 +433,67 @@ setInterval(updateDateTime, 1000);
 
 updateDateTime();
 
+
+// CLEAR HISTORY
 function clearHistory() {
 
     document.getElementById("historyBody").innerHTML = "";
 
     localStorage.removeItem("fraudHistory");
+}
+
+
+// PIE CHART
+const ctx = document.getElementById("fraudChart").getContext("2d");
+
+let fraudChart = new Chart(ctx, {
+
+    type: "pie",
+
+    data: {
+
+        labels: [
+
+            "High Risk",
+
+            "Medium Risk",
+
+            "Safe"
+        ],
+
+        datasets: [{
+
+            data: [0, 0, 0],
+
+            backgroundColor: [
+
+                "red",
+
+                "orange",
+
+                "green"
+            ]
+        }]
+    },
+
+    options: {
+
+        responsive: false
+    }
+});
+
+
+// UPDATE CHART
+function updateChart() {
+
+    fraudChart.data.datasets[0].data = [
+
+        highRiskTransactions,
+
+        mediumRiskCount,
+
+        safeTransactions
+    ];
+
+    fraudChart.update();
 }
