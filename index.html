@@ -18,6 +18,13 @@
 
 <body class="dark-mode">
 
+    <div id="fraudAlert">
+    
+        ⚠ FRAUD ALERT DETECTED
+    
+    </div>
+    
+
     <!-- ════════════════════════════════ PARTICLE CANVAS ════════════════════════════════ -->
     <canvas id="particleCanvas"></canvas>
 
@@ -62,6 +69,7 @@
             <div class="meta-bar">
                 <h4 id="liveDateTime" class="live-time"></h4>
                 <h3 id="riskLevel" class="risk-badge"></h3>
+                
             </div>
 
             <!-- ─── SCAN FORM CARD ─── -->
@@ -115,6 +123,11 @@
                         </div>
                     </div>
                 </div>
+                <button onclick="getLocation()" id="locationBtn">
+                    📍 Detect Live Location
+                </button>
+                
+                <h3 id="liveLocation"></h3>
 
                 <!-- Scan Button -->
                 <button onclick="checkFraud()" id="scanBtn" class="btn-primary" aria-label="Check transaction for fraud">
@@ -135,6 +148,7 @@
                         <h3 id="score" class="result-score"></h3>
                         <h3 id="transactionId" class="result-txn"></h3>
                         <h3 id="reason" class="result-reason"></h3>
+                        <h3 id="locationAlert"></h3>
                     </div>
                     <div class="result-col result-actions">
                         <button onclick="downloadReport()" id="downloadBtn" class="btn-secondary" aria-label="Download fraud report">
@@ -142,6 +156,7 @@
                         </button>
                     </div>
                 </div>
+                <div id="aiRecommendation"></div>
 
                 <!-- Progress Bar -->
                 <div class="progress-label-row">
@@ -292,6 +307,10 @@
             document.getElementById('modeText').textContent = isDark ? 'Light Mode' : 'Dark Mode';
         };
     </script>
+<audio id="alarmSound">
 
+    <source src="alarm.mp3" type="audio/mpeg">
+
+</audio>
 </body>
 </html>

@@ -1111,3 +1111,74 @@ body:not(.dark-mode) #particleCanvas {
         transition-duration: 0.01ms !important;
     }
 }
+
+#aiRecommendation {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    background: rgba(0, 255, 255, 0.08);
+
+    border: 1px solid rgba(0, 255, 255, 0.2);
+
+    color: #00e5ff;
+
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+}
+
+#fraudAlert {
+
+    position: fixed;
+
+    top: 20px;
+
+    right: 20px;
+
+    background: red;
+
+    color: white;
+
+    padding: 15px 25px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    border-radius: 12px;
+
+    display: none;
+
+    z-index: 9999;
+
+    box-shadow: 0 0 20px red;
+
+    animation: popup 0.5s ease;
+
+}
+
+@keyframes popup {
+
+    from {
+
+        transform: translateX(200px);
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        transform: translateX(0);
+
+        opacity: 1;
+
+    }
+
+}

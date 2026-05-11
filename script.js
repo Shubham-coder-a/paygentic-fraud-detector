@@ -1,3 +1,5 @@
+let currentLatitude = "";
+let currentLongitude = "";
 let mediumRiskCount = 0;
 
 let totalTransactions = 0;
@@ -40,12 +42,15 @@ window.onload = function () {
 
 // MAIN FRAUD CHECK FUNCTION
 function checkFraud() {
+    let fraudScore = 0;
 
     let scannerText = document.getElementById("scannerText");
 
     let amount = Number(document.getElementById("amount").value);
 
     let location = document.getElementById("location").value;
+
+    let transactionLocation = document.getElementById("location").value.toLowerCase();
 
     let paymentMethod = document.getElementById("paymentMethod").value;
 
@@ -64,6 +69,8 @@ function checkFraud() {
     let reason = document.getElementById("reason");
 
     let progressBar = document.getElementById("progress-bar");
+
+    let locationAlert = document.getElementById("locationAlert");
 
 
     // RESET OLD DATA
@@ -137,9 +144,8 @@ function checkFraud() {
             progressBar.style.backgroundColor = "gray";
         }
 
-
         // HIGH RISK
-        else if (
+        if (
 
             amount > 50000 ||
 
@@ -149,9 +155,16 @@ function checkFraud() {
 
         ) {
 
+             
             result.innerHTML = "⚠️ Suspicious Transaction";
 
             result.style.color = "red";
+
+            riskLevel.style.border =
+                "1px solid red";
+
+            riskLevel.style.boxShadow =
+                "0 0 10px red";
 
 
             riskLevel.innerHTML = "🔴 High Risk";
@@ -168,6 +181,20 @@ function checkFraud() {
                 "Reason: High Amount / Blacklisted Location / Late Night Transaction";
 
             reason.style.color = "red";
+
+            aiRecommendation.innerHTML =
+                "⚠️ AI Recommendation: Block transaction immediately and verify identity.";
+            aiRecommendation.style.color = "red";
+
+            // LOCATION MISMATCH
+            if (
+                location.toLowerCase().includes("pune") &&
+                currentLatitude.toFixed(0) != 18
+            ) {
+
+                reason.innerHTML +=
+                    " / Location Mismatch Detected";
+            }
 
 
             speakMessage("Warning! Suspicious Transaction Detected");
@@ -186,6 +213,9 @@ function checkFraud() {
             document.getElementById("totalTransactions").innerHTML =
                 totalTransactions;
 
+            document.getElementById("mediumRiskCount").innerHTML =
+                mediumRiskCount;
+
             document.getElementById("highRiskCount").innerHTML =
                 highRiskTransactions;
 
@@ -201,21 +231,32 @@ function checkFraud() {
 
             }, 3000);
 
+            let fraudAlert =
+                document.getElementById("fraudAlert");
+
+            fraudAlert.style.display = "block";
+
+            setTimeout(() => {
+
+                fraudAlert.style.display = "none";
+
+            }, 3000);
+
 
             // HISTORY
             historyBody.innerHTML += `
 
-            <tr>
+    <tr>
 
-                <td>${amount}</td>
+        <td>${amount}</td>
 
-                <td>${location}</td>
+        <td>${location}</td>
 
-                <td style="color:red;">High Risk</td>
+        <td style="color:red;">High Risk</td>
 
-            </tr>
+    </tr>
 
-            `;
+    `;
         }
 
 
@@ -231,6 +272,12 @@ function checkFraud() {
 
             riskLevel.style.color = "orange";
 
+            riskLevel.style.border =
+                "1px solid orange";
+
+            riskLevel.style.boxShadow =
+                "0 0 10px orange";
+
 
             score.innerHTML = "Fraud Score: 55%";
 
@@ -244,6 +291,13 @@ function checkFraud() {
 
 
             speakMessage("Monitor this transaction carefully");
+
+            let alarm =
+                document.getElementById("alarmSound");
+
+            alarm.play();
+
+            speakMessage("Warning! Suspicious Transaction Detected");
 
 
             progressBar.style.width = "55%";
@@ -259,6 +313,9 @@ function checkFraud() {
             document.getElementById("totalTransactions").innerHTML =
                 totalTransactions;
 
+            aiRecommendation.innerHTML =
+                "⚠️ AI Recommendation: Monitor this transaction carefully.";
+            aiRecommendation.style.color = "orange";
 
             historyBody.innerHTML += `
 
@@ -273,6 +330,7 @@ function checkFraud() {
             </tr>
 
             `;
+
         }
 
 
@@ -287,6 +345,12 @@ function checkFraud() {
             riskLevel.innerHTML = "🟢 Low Risk";
 
             riskLevel.style.color = "green";
+
+            riskLevel.style.border =
+                "1px solid lime";
+
+            riskLevel.style.boxShadow =
+                "0 0 10px lime";
 
 
             score.innerHTML = "Fraud Score: 10%";
@@ -319,6 +383,10 @@ function checkFraud() {
             document.getElementById("safeCount").innerHTML =
                 safeTransactions;
 
+            aiRecommendation.innerHTML =
+                "✅ AI Recommendation: Transaction appears legitimate.";
+
+            aiRecommendation.style.color = "lime";
 
             historyBody.innerHTML += `
 
@@ -497,3 +565,43 @@ function updateChart() {
 
     fraudChart.update();
 }
+
+function getLocation() {
+
+    let liveLocation = document.getElementById("liveLocation");
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                currentLatitude = position.coords.latitude;
+                currentLongitude = position.coords.longitude;
+
+                liveLocation.innerHTML =
+
+                    "📍 Live Location Coordinates: " +
+
+                    currentLatitude.toFixed(2) +
+
+                    ", " +
+
+                    currentLongitude.toFixed(2);
+            },
+
+            function () {
+
+                liveLocation.innerHTML =
+                    "❌ Location access denied";
+            }
+        );
+
+    } else {
+
+        liveLocation.innerHTML =
+            "❌ Geolocation not supported";
+    }
+}
+let aiRecommendation =
+    document.getElementById("aiRecommendation");
