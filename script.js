@@ -155,7 +155,7 @@ function checkFraud() {
 
         ) {
 
-             
+
             result.innerHTML = "⚠️ Suspicious Transaction";
 
             result.style.color = "red";

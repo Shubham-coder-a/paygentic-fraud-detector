@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Paygentic Fraud Detector – AI-powered cybersecurity dashboard for real-time payment fraud analysis and transaction monitoring.">
+    <meta name="description"
+        content="Paygentic Fraud Detector – AI-powered cybersecurity dashboard for real-time payment fraud analysis and transaction monitoring.">
     <title>Paygentic Fraud Detector | AI Cybersecurity Dashboard</title>
 
     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,11 +21,11 @@
 <body class="dark-mode">
 
     <div id="fraudAlert">
-    
+
         ⚠ FRAUD ALERT DETECTED
-    
+
     </div>
-    
+
 
     <!-- ════════════════════════════════ PARTICLE CANVAS ════════════════════════════════ -->
     <canvas id="particleCanvas"></canvas>
@@ -69,7 +71,7 @@
             <div class="meta-bar">
                 <h4 id="liveDateTime" class="live-time"></h4>
                 <h3 id="riskLevel" class="risk-badge"></h3>
-                
+
             </div>
 
             <!-- ─── SCAN FORM CARD ─── -->
@@ -126,11 +128,12 @@
                 <button onclick="getLocation()" id="locationBtn">
                     📍 Detect Live Location
                 </button>
-                
+
                 <h3 id="liveLocation"></h3>
 
                 <!-- Scan Button -->
-                <button onclick="checkFraud()" id="scanBtn" class="btn-primary" aria-label="Check transaction for fraud">
+                <button onclick="checkFraud()" id="scanBtn" class="btn-primary"
+                    aria-label="Check transaction for fraud">
                     <span class="btn-icon">⚡</span>
                     <span>Check Transaction</span>
                     <span class="btn-shimmer"></span>
@@ -151,7 +154,8 @@
                         <h3 id="locationAlert"></h3>
                     </div>
                     <div class="result-col result-actions">
-                        <button onclick="downloadReport()" id="downloadBtn" class="btn-secondary" aria-label="Download fraud report">
+                        <button onclick="downloadReport()" id="downloadBtn" class="btn-secondary"
+                            aria-label="Download fraud report">
                             <span>📥</span> Download Report
                         </button>
                     </div>
@@ -205,7 +209,8 @@
                         <span class="card-icon">🗂️</span>
                         <h2 class="card-title inline">Transaction History</h2>
                     </div>
-                    <button onclick="clearHistory()" id="clearBtn" class="btn-danger" aria-label="Clear all transaction history">
+                    <button onclick="clearHistory()" id="clearBtn" class="btn-danger"
+                        aria-label="Clear all transaction history">
                         🗑️ Clear History
                     </button>
                 </div>
@@ -307,10 +312,11 @@
             document.getElementById('modeText').textContent = isDark ? 'Light Mode' : 'Dark Mode';
         };
     </script>
-<audio id="alarmSound">
+    <audio id="alarmSound">
 
-    <source src="alarm.mp3" type="audio/mpeg">
+        <source src="alarm.mp3" type="audio/mpeg">
 
-</audio>
+    </audio>
 </body>
+
 </html>
