@@ -56,4 +56,4 @@ https://github.com/Shubham-coder-a
 
 ## 🌐 Live Project
 
-Coming Soon 🚀
+https://shubham-coder-a.github.io/paygentic-fraud-detector/
