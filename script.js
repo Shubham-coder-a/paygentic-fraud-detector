@@ -7,6 +7,7 @@ let totalTransactions = 0;
 let highRiskTransactions = 0;
 
 let safeTransactions = 0;
+let safeCount = 0;
 
 
 // SPEAK MESSAGE
@@ -209,6 +210,8 @@ function checkFraud() {
 
             highRiskTransactions++;
 
+            highRiskCount++;
+
 
             document.getElementById("totalTransactions").innerHTML =
                 totalTransactions;
@@ -375,6 +378,7 @@ function checkFraud() {
             totalTransactions++;
 
             safeTransactions++;
+            safeCount++;
 
 
             document.getElementById("totalTransactions").innerHTML =
@@ -556,15 +560,15 @@ function updateChart() {
 
     fraudChart.data.datasets[0].data = [
 
-        highRiskTransactions,
-
+        highRiskCount,
         mediumRiskCount,
+        safeCount
 
-        safeTransactions
     ];
 
     fraudChart.update();
 }
+
 
 function getLocation() {
 
