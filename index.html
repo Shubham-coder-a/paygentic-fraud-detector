@@ -82,6 +82,41 @@
                     <p class="card-subtitle">Check if a payment transaction is safe or suspicious.</p>
                 </div>
 
+                <h3 class="form-section-title">User Information</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-wrap">
+                            <span class="input-prefix">👤</span>
+                            <input type="text" id="fullName" placeholder="e.g. John Doe" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrap">
+                            <span class="input-prefix">✉️</span>
+                            <input type="email" id="email" placeholder="e.g. john@example.com" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-wrap">
+                            <span class="input-prefix">📱</span>
+                            <input type="tel" id="phone" placeholder="e.g. +91 9876543210" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="receiverName">Receiver Name</label>
+                        <div class="input-wrap">
+                            <span class="input-prefix">🏢</span>
+                            <input type="text" id="receiverName" placeholder="e.g. Amazon India" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <h3 class="form-section-title">Transaction Details</h3>
                 <div class="form-grid">
                     <!-- Amount -->
                     <div class="input-group">
@@ -101,27 +136,97 @@
                         </div>
                     </div>
 
-                    <!-- Payment Method -->
-                    <div class="input-group">
-                        <label for="paymentMethod">Payment Method</label>
-                        <div class="input-wrap">
-                            <span class="input-prefix">💳</span>
-                            <select id="paymentMethod">
-                                <option value="">Select Payment Method</option>
-                                <option value="UPI">UPI</option>
-                                <option value="Card">Card</option>
-                                <option value="Wallet">Wallet</option>
-                                <option value="Net Banking">Net Banking</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <!-- Time -->
                     <div class="input-group">
                         <label for="time">Transaction Time</label>
                         <div class="input-wrap">
                             <span class="input-prefix">⏱️</span>
                             <input type="time" id="time">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="input-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <div class="input-wrap">
+                            <span class="input-prefix">💳</span>
+                            <select id="paymentMethod" onchange="togglePaymentFields()">
+                                <option value="">Select Payment Method</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Card">Debit / Credit Card</option>
+                                <option value="Wallet">Digital Wallet</option>
+                                <option value="Net Banking">Net Banking</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC PAYMENT FIELDS -->
+                <div id="dynamicFieldsContainer" class="dynamic-payment-fields">
+                    <!-- UPI -->
+                    <div id="upiField" class="payment-method-group hidden">
+                        <div class="input-group full-width">
+                            <label for="upiId">UPI ID</label>
+                            <div class="input-wrap">
+                                <span class="input-prefix">🔗</span>
+                                <input type="text" id="upiId" placeholder="e.g. username@bank" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card -->
+                    <div id="cardField" class="payment-method-group hidden">
+                        <div class="input-group full-width mb-10">
+                            <label for="cardNumber">Card Number</label>
+                            <div class="input-wrap">
+                                <span class="input-prefix">🔢</span>
+                                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" autocomplete="off" maxlength="19">
+                            </div>
+                        </div>
+                        <div class="form-grid-half">
+                            <div class="input-group">
+                                <label for="cardExpiry">Expiry (MM/YY)</label>
+                                <div class="input-wrap">
+                                    <span class="input-prefix">📅</span>
+                                    <input type="text" id="cardExpiry" placeholder="MM/YY" autocomplete="off" maxlength="5">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="cardCvv">CVV</label>
+                                <div class="input-wrap">
+                                    <span class="input-prefix">🔒</span>
+                                    <input type="password" id="cardCvv" placeholder="***" autocomplete="off" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wallet -->
+                    <div id="walletField" class="payment-method-group hidden">
+                        <div class="input-group full-width">
+                            <label for="walletNumber">Wallet Number / ID</label>
+                            <div class="input-wrap">
+                                <span class="input-prefix">💼</span>
+                                <input type="text" id="walletNumber" placeholder="e.g. +91 9876543210 or Wallet ID" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking -->
+                    <div id="netBankingField" class="payment-method-group hidden">
+                        <div class="input-group full-width mb-10">
+                            <label for="bankAccount">Bank Account Number</label>
+                            <div class="input-wrap">
+                                <span class="input-prefix">🏦</span>
+                                <input type="password" id="bankAccount" placeholder="e.g. 0000123456789" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="input-group full-width">
+                            <label for="ifscCode">IFSC Code</label>
+                            <div class="input-wrap">
+                                <span class="input-prefix">🏛️</span>
+                                <input type="text" id="ifscCode" placeholder="e.g. SBIN0001234" autocomplete="off">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,6 +256,10 @@
                         <h3 id="score" class="result-score"></h3>
                         <h3 id="transactionId" class="result-txn"></h3>
                         <h3 id="reason" class="result-reason"></h3>
+                        <div class="status-badges">
+                            <span id="securityStatus" class="badge hidden"></span>
+                            <span id="scanStatus" class="badge hidden"></span>
+                        </div>
                         <h3 id="locationAlert"></h3>
                     </div>
                     <div class="result-col result-actions">
@@ -191,16 +300,30 @@
                 </div>
             </div>
 
-            <!-- ─── PIE CHART ─── -->
-            <section class="card glass-card chart-section" aria-label="Fraud Distribution Chart">
-                <div class="card-header">
-                    <span class="card-icon">🥧</span>
-                    <h2 class="card-title">Risk Distribution</h2>
-                </div>
-                <div class="chart-container">
-                    <canvas id="fraudChart"></canvas>
-                </div>
-            </section>
+            <!-- ─── PIE CHART & AI LOGS GRID ─── -->
+            <div class="dashboard-grid-2">
+                <!-- ─── PIE CHART ─── -->
+                <section class="card glass-card chart-section" aria-label="Fraud Distribution Chart">
+                    <div class="card-header">
+                        <span class="card-icon">🥧</span>
+                        <h2 class="card-title">Risk Distribution</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="fraudChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- ─── AI LOGS ─── -->
+                <section class="card glass-card terminal-section" aria-label="AI Monitoring Logs">
+                    <div class="card-header">
+                        <span class="card-icon">📟</span>
+                        <h2 class="card-title">Live AI Monitoring Logs</h2>
+                    </div>
+                    <div class="terminal-container" id="aiLogTerminal">
+                        <div class="log-entry sys-msg">&gt; SYSTEM: AI Sentinel initialized. Monitoring active.</div>
+                    </div>
+                </section>
+            </div>
 
             <!-- ─── TRANSACTION HISTORY ─── -->
             <section class="card glass-card history-section" aria-label="Transaction History">
